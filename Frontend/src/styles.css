@@ -1,0 +1,8 @@
+@import "~ngx-toastr/toastr";
+
+body {
+  background-color: #212121;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
