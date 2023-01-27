@@ -1,3 +1,3 @@
-import { InjectionToken } from '@angular/core';
+import { environment } from "src/environments/environment";
 
-export const BASE_PATH = new InjectionToken<string>('basePath');
+export const BASE_PATH: string = environment.serverUri;

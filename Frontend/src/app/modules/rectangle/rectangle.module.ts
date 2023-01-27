@@ -10,7 +10,10 @@ import { RectangleService } from './services/rectangle.service';
     RectangleComponent,
   ],
   exports: [RectangleComponent],
-  imports: [SharedModule, CommonModule],
+  imports: [
+    CommonModule,
+    SharedModule
+  ],
   providers: [RectangleService]
 })
 export class RectangleModule { }

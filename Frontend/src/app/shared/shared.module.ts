@@ -13,7 +13,7 @@ import { BASE_PATH } from './variables';
   ],
   providers: [
     {
-      provide: BASE_PATH, useValue: environment.serverUri
+      provide: BASE_PATH, useValue: BASE_PATH
     }
   ],
 })

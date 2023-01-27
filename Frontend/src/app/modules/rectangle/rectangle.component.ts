@@ -13,9 +13,6 @@ import { RectangleService } from './services/rectangle.service';
   styleUrls: ['./rectangle.component.css'],
 })
 export class RectangleComponent implements AfterViewInit, OnInit, OnDestroy {
-  private destroy$: Subject<boolean> = new Subject<boolean>();
-  private readonly invisibleBorder: number = 10;
-
   public rectangle: Rectangle = new Rectangle();
   public rectangleCopy: RectangleCoordinates;
 
@@ -29,6 +26,9 @@ export class RectangleComponent implements AfterViewInit, OnInit, OnDestroy {
 
   public isEdited: boolean;
   public isRectangleCreated: boolean = false;
+
+  private destroy$: Subject<boolean> = new Subject<boolean>();
+  private readonly invisibleBorder: number = 10;
 
   constructor(
     private rectangleHttpService: RectangleService,
@@ -47,7 +47,7 @@ export class RectangleComponent implements AfterViewInit, OnInit, OnDestroy {
       this.rectangle.y2 = rectangle.y2 ?? 0;
 
       this.isRectangleCreated = true;
-      this.perimeter = this.rectangle.getPerimetr();
+      this.perimeter = this.rectangle.Perimetr;
       this.toastr.success('Data loaded.');
     });
   }
@@ -61,32 +61,34 @@ export class RectangleComponent implements AfterViewInit, OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  private mouseDownEvent(event: any) {
+  private mouseDownEvent(event: any): void {
     this.isEdited = true;
     this.rectangleCopy = { ...this.rectangle }
     this.xResize = event.clientX;
     this.yResize = event.clientY;
   }
 
-  private mouseUpEvent(event: any) {
+  private mouseUpEvent(event: any): void {
     this.isEdited = false;
 
-    if (!Rectangle.isRectanglesEqual(this.rectangle, this.rectangleCopy))
+    if (!Rectangle.isRectanglesEqual(this.rectangle, this.rectangleCopy)) {
       this.SaveRectangle();
-    this.perimeter = this.rectangle.getPerimetr();
+    }
+
+    this.perimeter = this.rectangle.Perimetr;
   }
 
-  private mouseMoveEvent(event: any) {
+  private mouseMoveEvent(event: any): void {
     if (this.isEdited)
       if (!this.isRectangleCreated) {
         if (
-          event.clientX + this.invisibleBorder < this.canvasHeigth &&
-          event.clientX - this.invisibleBorder > 0
+          (event.clientX + this.invisibleBorder < this.canvasHeigth) &&
+          (event.clientX - this.invisibleBorder > 0)
         )
           this.rectangle.x2 = event.clientX;
         if (
-          event.clientY + this.invisibleBorder < this.canvasWidth &&
-          event.clientY - this.invisibleBorder > 0
+          (event.clientY + this.invisibleBorder < this.canvasWidth) &&
+          (event.clientY - this.invisibleBorder > 0)
         )
           this.rectangle.y2 = event.clientY;
       } else {
@@ -95,8 +97,9 @@ export class RectangleComponent implements AfterViewInit, OnInit, OnDestroy {
         const yChange = (this.yResize - event.clientY) / speed;
 
         let touchedResizePoint = TogglePoint.NoPoint;
-        let width = this.rectangle.getWidth() / 2;
-        let heigth = this.rectangle.getHeigth() / 2;
+
+        let width = this.rectangle.Width / 2;
+        let heigth = this.rectangle.Height / 2;
 
         if (
           Math.abs(this.rectangle.x1 - event.clientX) < width &&
@@ -160,12 +163,12 @@ export class RectangleComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   private CheckForChange(change: number, canvas: number): boolean {
-    let x = this.rectangle.y2 + change + this.invisibleBorder < canvas;
-    let y = this.rectangle.y2 - change - this.invisibleBorder > 0
+    let x = this.rectangle.y2 + change + this.invisibleBorder < (this.canvasHeigth && this.canvasWidth);
+    let y = this.rectangle.y2 - change - this.invisibleBorder > 0;
     return x && y;
   }
 
-  private RegisterEvents() {
+  private RegisterEvents(): void {
     fromEvent(document, 'mousedown')
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => this.mouseDownEvent(res));
@@ -177,11 +180,11 @@ export class RectangleComponent implements AfterViewInit, OnInit, OnDestroy {
       .subscribe((res) => this.mouseMoveEvent(res));
   }
 
-  private SaveRectangle() {
+  private SaveRectangle(): void {
     this.rectangleHttpService.saveRectangle(this.rectangle).pipe(catchError(() => {
       this.toastr.error('Error , can not save data.');
       return EMPTY;
-    }),debounceTime(50000)).subscribe(() => {
+    }), debounceTime(50000)).subscribe(() => {
       this.toastr.success('Data saved.');
     })
   }

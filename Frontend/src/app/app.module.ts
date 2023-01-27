@@ -15,12 +15,12 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   bootstrap: [AppComponent],
   imports: [
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    HttpClientModule,
     FormsModule,
-    BrowserModule,
     CommonModule,
+    BrowserModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
     SharedModule,
     RectangleModule,
   ]

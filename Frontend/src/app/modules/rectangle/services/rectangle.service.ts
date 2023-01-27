@@ -7,9 +7,9 @@ import { Rectangle } from '../rectangle.model';
 @Injectable()
 export class RectangleService {
 
-  protected basePath = '/';
+  private basePath = '/';
 
-  constructor(protected httpClient: HttpClient, @Inject(BASE_PATH) basePath: string) {
+  constructor(private httpClient: HttpClient, @Inject (BASE_PATH) basePath: string) {
     if (basePath) {
       this.basePath = basePath;
     }
@@ -20,6 +20,6 @@ export class RectangleService {
   }
 
   public saveRectangle(rectangle: Rectangle) {
-    return this.httpClient.post(`${this.basePath}/Api/SaveRectangle`, rectangle)
+    return this.httpClient.post(`${this.basePath}/Api/SaveRectangle`, rectangle);
   }
 }

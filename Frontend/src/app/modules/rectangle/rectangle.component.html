@@ -1,16 +1,16 @@
 <app-canvas class="container" #canvas [width]="canvasWidth" [heigth]="canvasHeigth">
   <ng-container *ngIf="isRectangleCreated">
 
-    <svg:rect class="border-gradient" [attr.x]="rectangle.getX()" [attr.y]="rectangle.getY()"
-      [attr.width]="rectangle.getWidth()" [attr.height]="rectangle.getHeigth()"></svg:rect>
+    <svg:rect class="border-gradient" [attr.x]="rectangle.X" [attr.y]="rectangle.Y" [attr.width]="rectangle.Width"
+      [attr.height]="rectangle.Height"></svg:rect>
 
-    <svg:text *ngIf="rectangle.x1 < rectangle.x2; else elseBlock" stroke="white" [attr.x]="rectangle.getX()"
-      [attr.y]="rectangle.getY()" class="small">
+    <svg:text *ngIf="rectangle.x1 < rectangle.x2; else elseBlock" stroke="white" [attr.x]="rectangle.X"
+      [attr.y]="rectangle.Y" class="small">
       Perimeter: {{ perimeter }}
     </svg:text>
 
     <ng-template #elseBlock>
-      <svg:text [attr.x]="rectangle.getX()" [attr.y]="rectangle.getY()" stroke="white" class="small">
+      <svg:text [attr.x]="rectangle.X" [attr.y]="rectangle.Y" stroke="white" class="small">
         Perimeter: {{ perimeter }}
       </svg:text>
     </ng-template>
