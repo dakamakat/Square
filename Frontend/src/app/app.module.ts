@@ -1,34 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
-import { CanvasComponent } from './components/canvas/canvas.component';
-import { RectangleComponent } from './components/rectangle/rectangle.component';
-
-import { environment } from 'src/environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { ApiModule } from './core/services/api.module';
-import { BASE_PATH } from './core/services/variables';
+import { SharedModule } from './shared/shared.module';
+import { RectangleModule } from './modules/rectangle/rectangle.module';
+import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CanvasComponent,
-    RectangleComponent
   ],
+  bootstrap: [AppComponent],
   imports: [
-    BrowserModule,
-    CommonModule,
-    ApiModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot(),
     HttpClientModule,
-  ],
-  providers: [
-    {
-      provide: BASE_PATH, useValue: environment.serverUri
-    }
-  ],
-  bootstrap: [AppComponent]
+    FormsModule,
+    BrowserModule,
+    CommonModule,
+    SharedModule,
+    RectangleModule,
+  ]
 })
 export class AppModule { }

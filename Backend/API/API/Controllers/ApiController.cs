@@ -19,7 +19,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRectangle()
         {
-            var rect = await _repository.GetRectangleAsync();
+                var rect = await _repository.GetRectangleAsync();
 
             if (rect is null)
             {
